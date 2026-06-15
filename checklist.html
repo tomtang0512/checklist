@@ -33,7 +33,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Layout ── */
   #app {
     display: flex;
     flex-direction: column;
@@ -65,9 +64,7 @@
     letter-spacing: .02em;
   }
 
-  .tab-btn.active {
-    color: var(--tab-active);
-  }
+  .tab-btn.active { color: var(--tab-active); }
 
   .tab-btn.active::after {
     content: '';
@@ -80,6 +77,37 @@
     border-radius: 2px 2px 0 0;
   }
 
+  /* ── Sync status bar ── */
+  #sync-bar {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  #sync-bar.visible { display: flex; }
+
+  .sync-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #ccc;
+    flex-shrink: 0;
+    transition: background .3s;
+  }
+
+  .sync-dot.ok { background: #4caf50; }
+  .sync-dot.syncing { background: #ff9800; animation: pulse .8s infinite; }
+  .sync-dot.err { background: #f44336; }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; } 50% { opacity: .3; }
+  }
+
   /* ── List area ── */
   #list-area {
     flex: 1;
@@ -88,7 +116,6 @@
     padding: 16px 16px 8px;
   }
 
-  /* ── Empty state ── */
   .empty {
     display: flex;
     flex-direction: column;
@@ -103,14 +130,14 @@
 
   .empty-icon { font-size: 36px; opacity: .4; }
 
-  /* ── Shopping list items ── */
+  /* ── Shopping items ── */
   .item {
     display: flex;
     align-items: center;
     gap: 12px;
     background: var(--surface);
     border-radius: var(--radius);
-    padding: 14px 14px;
+    padding: 14px;
     margin-bottom: 8px;
     border: 1px solid var(--border);
     transition: opacity .15s;
@@ -119,8 +146,7 @@
   .item.done { opacity: .55; }
 
   .check-btn {
-    width: 22px;
-    height: 22px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     border: 2px solid var(--border);
     background: none;
@@ -133,11 +159,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .item.done .check-btn {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-
+  .item.done .check-btn { background: var(--accent); border-color: var(--accent); }
   .check-btn svg { display: none; }
   .item.done .check-btn svg { display: block; }
 
@@ -146,60 +168,40 @@
     font-size: 15px;
     line-height: 1.4;
     word-break: break-all;
-    transition: color .15s;
   }
 
-  .item.done .item-text {
-    text-decoration: line-through;
-    color: var(--done-color);
-  }
+  .item.done .item-text { text-decoration: line-through; color: var(--done-color); }
 
-  .del-btn {
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    flex-shrink: 0;
+  .del-btn, .tl-del {
+    width: 28px; height: 28px;
+    border: none; background: none;
+    cursor: pointer; color: #ccc;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0;
     -webkit-tap-highlight-color: transparent;
     transition: color .15s;
   }
 
-  .del-btn:active { color: #e55; }
+  .del-btn:active, .tl-del:active { color: #e55; }
 
-  /* ── Timeline (places) ── */
-  .timeline {
-    position: relative;
-    padding-left: 28px;
-  }
+  /* ── Timeline ── */
+  .timeline { position: relative; padding-left: 28px; }
 
   .timeline::before {
     content: '';
     position: absolute;
-    left: 9px;
-    top: 8px;
-    bottom: 8px;
+    left: 9px; top: 8px; bottom: 8px;
     width: 2px;
     background: var(--border);
     border-radius: 2px;
   }
 
-  .tl-item {
-    position: relative;
-    margin-bottom: 12px;
-  }
+  .tl-item { position: relative; margin-bottom: 12px; }
 
   .tl-dot {
     position: absolute;
-    left: -23px;
-    top: 14px;
-    width: 10px;
-    height: 10px;
+    left: -23px; top: 14px;
+    width: 10px; height: 10px;
     border-radius: 50%;
     background: var(--surface);
     border: 2px solid var(--border);
@@ -208,10 +210,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .tl-item.done .tl-dot {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
+  .tl-item.done .tl-dot { background: var(--accent); border-color: var(--accent); }
 
   .tl-card {
     background: var(--surface);
@@ -229,45 +228,15 @@
   .tl-body { flex: 1; min-width: 0; }
 
   .tl-name {
-    font-size: 15px;
-    line-height: 1.4;
-    word-break: break-all;
-    transition: color .15s;
+    font-size: 15px; line-height: 1.4; word-break: break-all;
   }
 
-  .tl-item.done .tl-name {
-    text-decoration: line-through;
-    color: var(--done-color);
-  }
+  .tl-item.done .tl-name { text-decoration: line-through; color: var(--done-color); }
 
-  .tl-time {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 3px;
-  }
+  .tl-time { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
 
-  .tl-del {
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-    transition: color .15s;
-  }
-
-  .tl-del:active { color: #e55; }
-
-  /* ── Section header (done items) ── */
   .section-header {
-    font-size: 12px;
-    color: var(--text-muted);
+    font-size: 12px; color: var(--text-muted);
     padding: 12px 4px 6px;
     letter-spacing: .04em;
     text-transform: uppercase;
@@ -304,25 +273,17 @@
   #item-input::placeholder { color: var(--text-muted); }
 
   #add-btn {
-    width: var(--input-h);
-    height: var(--input-h);
-    border-radius: 10px;
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    font-size: 24px;
+    width: var(--input-h); height: var(--input-h);
+    border-radius: 10px; border: none;
+    background: var(--accent); color: #fff;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     -webkit-tap-highlight-color: transparent;
     transition: opacity .15s;
   }
 
   #add-btn:active { opacity: .7; }
-
-  /* ── Scrollbar ── */
   #list-area::-webkit-scrollbar { width: 0; }
 </style>
 </head>
@@ -333,10 +294,15 @@
     <button class="tab-btn" data-tab="places" onclick="switchTab('places')">📍 地点清单</button>
   </div>
 
+  <div id="sync-bar">
+    <div class="sync-dot" id="sync-dot"></div>
+    <span id="sync-text">连接中…</span>
+  </div>
+
   <div id="list-area"></div>
 
   <div id="input-bar">
-    <input id="item-input" type="text" placeholder="添加新项目…" autocomplete="off" autocorrect="off" spellcheck="false">
+    <input id="item-input" type="text" placeholder="添加购物项目…" autocomplete="off" autocorrect="off" spellcheck="false">
     <button id="add-btn" onclick="addItem()">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M10 4v12M4 10h12" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
@@ -345,72 +311,163 @@
   </div>
 </div>
 
-<script>
+<!-- Firebase SDK (CDN, no bundler needed) -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, collection, doc,
+  onSnapshot, addDoc, updateDoc, deleteDoc,
+  query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ── Firebase init ──────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyDeT_tLJ6NzB6ouCpNProA2iXMqZ_RT3ek",
+  authDomain: "checklist-2ce49.firebaseapp.com",
+  projectId: "checklist-2ce49",
+  storageBucket: "checklist-2ce49.firebasestorage.app",
+  messagingSenderId: "330444632292",
+  appId: "1:330444632292:web:5b002c44ca205196a97cf1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
 // ── State ──────────────────────────────────────────────
 let currentTab = 'shopping';
+let placesItems = [];   // from Firestore, realtime
+let unsubscribe = null; // Firestore listener
 
-function loadData(tab) {
-  try { return JSON.parse(localStorage.getItem('cl_' + tab)) || []; }
+// ── Sync bar ───────────────────────────────────────────
+function setSyncStatus(state, text) {
+  const bar  = document.getElementById('sync-bar');
+  const dot  = document.getElementById('sync-dot');
+  const span = document.getElementById('sync-text');
+  bar.classList.toggle('visible', currentTab === 'places');
+  dot.className = 'sync-dot ' + state;
+  span.textContent = text;
+}
+
+// ── localStorage helpers (shopping only) ──────────────
+function loadShopping() {
+  try { return JSON.parse(localStorage.getItem('cl_shopping')) || []; }
   catch { return []; }
 }
-
-function saveData(tab, items) {
-  localStorage.setItem('cl_' + tab, JSON.stringify(items));
+function saveShopping(items) {
+  localStorage.setItem('cl_shopping', JSON.stringify(items));
 }
 
-function getItems() { return loadData(currentTab); }
-function setItems(items) { saveData(currentTab, items); }
+// ── Firestore helpers (places) ─────────────────────────
+const placesCol = collection(db, 'places');
+
+function subscribeToPlaces() {
+  if (unsubscribe) unsubscribe();
+  setSyncStatus('syncing', '连接中…');
+  const q = query(placesCol, orderBy('createdAt', 'desc'));
+  unsubscribe = onSnapshot(q,
+    snapshot => {
+      placesItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      setSyncStatus('ok', '已同步');
+      if (currentTab === 'places') render();
+    },
+    err => {
+      console.error(err);
+      setSyncStatus('err', '同步失败，请检查网络');
+    }
+  );
+}
+
+async function addPlace(text) {
+  const now = new Date();
+  const timeStr = (now.getMonth()+1) + '月' + now.getDate() + '日 '
+    + now.getHours().toString().padStart(2,'0') + ':'
+    + now.getMinutes().toString().padStart(2,'0');
+  await addDoc(placesCol, {
+    text,
+    done: false,
+    addedAt: timeStr,
+    createdAt: serverTimestamp()
+  });
+}
+
+async function togglePlace(id, currentDone) {
+  await updateDoc(doc(db, 'places', id), { done: !currentDone });
+}
+
+async function deletePlace(id) {
+  await deleteDoc(doc(db, 'places', id));
+}
 
 // ── Tab switch ─────────────────────────────────────────
-function switchTab(tab) {
+window.switchTab = function(tab) {
   currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === tab);
-  });
+  document.querySelectorAll('.tab-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === tab)
+  );
   const input = document.getElementById('item-input');
-  input.placeholder = tab === 'shopping' ? '添加购物项目…' : '添加地点（如：超市、咖啡馆）…';
+  const syncBar = document.getElementById('sync-bar');
+
+  if (tab === 'shopping') {
+    input.placeholder = '添加购物项目…';
+    syncBar.classList.remove('visible');
+    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+  } else {
+    input.placeholder = '添加地点（如：超市、咖啡馆）…';
+    subscribeToPlaces();
+  }
   render();
-}
+};
 
 // ── Add ────────────────────────────────────────────────
-function addItem() {
+window.addItem = async function() {
   const input = document.getElementById('item-input');
-  const text = input.value.trim();
+  const text  = input.value.trim();
   if (!text) return;
-
-  const items = getItems();
-  const now = new Date();
-  const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-  const dateStr = (now.getMonth()+1) + '月' + now.getDate() + '日 ' + timeStr;
-
-  items.unshift({ id: Date.now(), text, done: false, addedAt: dateStr });
-  setItems(items);
   input.value = '';
-  render();
-  // scroll to top
-  document.getElementById('list-area').scrollTop = 0;
-}
 
-// ── Toggle done ────────────────────────────────────────
-function toggleItem(id) {
-  const items = getItems();
-  const item = items.find(i => i.id === id);
-  if (item) item.done = !item.done;
-  setItems(items);
-  render();
-}
+  if (currentTab === 'shopping') {
+    const items = loadShopping();
+    const now = new Date();
+    const timeStr = (now.getMonth()+1) + '月' + now.getDate() + '日 '
+      + now.getHours().toString().padStart(2,'0') + ':'
+      + now.getMinutes().toString().padStart(2,'0');
+    items.unshift({ id: Date.now(), text, done: false, addedAt: timeStr });
+    saveShopping(items);
+    render();
+    document.getElementById('list-area').scrollTop = 0;
+  } else {
+    await addPlace(text);
+    // Firestore listener will trigger render automatically
+  }
+};
 
-// ── Delete ─────────────────────────────────────────────
-function deleteItem(id) {
-  const items = getItems().filter(i => i.id !== id);
-  setItems(items);
-  render();
-}
+// ── Toggle / Delete ────────────────────────────────────
+window.toggleItem = async function(id) {
+  if (currentTab === 'shopping') {
+    const items = loadShopping();
+    const item  = items.find(i => i.id === id);
+    if (item) item.done = !item.done;
+    saveShopping(items);
+    render();
+  } else {
+    const item = placesItems.find(i => i.id === id);
+    if (item) await togglePlace(id, item.done);
+  }
+};
+
+window.deleteItem = async function(id) {
+  if (currentTab === 'shopping') {
+    saveShopping(loadShopping().filter(i => i.id !== id));
+    render();
+  } else {
+    await deletePlace(id);
+  }
+};
 
 // ── Render ─────────────────────────────────────────────
 function render() {
-  const area = document.getElementById('list-area');
-  const items = getItems();
+  const area  = document.getElementById('list-area');
+  const items = currentTab === 'shopping' ? loadShopping() : placesItems;
 
   if (items.length === 0) {
     area.innerHTML = `<div class="empty">
@@ -420,21 +477,16 @@ function render() {
     return;
   }
 
-  if (currentTab === 'shopping') {
-    renderShopping(area, items);
-  } else {
-    renderPlaces(area, items);
-  }
+  currentTab === 'shopping' ? renderShopping(area, items) : renderPlaces(area, items);
 }
 
 function renderShopping(area, items) {
   const pending = items.filter(i => !i.done);
-  const done = items.filter(i => i.done);
-
+  const done    = items.filter(i => i.done);
   let html = '';
 
-  pending.forEach(item => {
-    html += `<div class="item" id="item-${item.id}">
+  const itemHtml = (item) => `
+    <div class="item ${item.done ? 'done' : ''}" id="item-${item.id}">
       <button class="check-btn" onclick="toggleItem(${item.id})">
         <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
           <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -447,87 +499,57 @@ function renderShopping(area, items) {
         </svg>
       </button>
     </div>`;
-  });
 
-  if (done.length > 0) {
+  pending.forEach(i => html += itemHtml(i));
+  if (done.length) {
     html += `<div class="section-header">已完成 ${done.length}</div>`;
-    done.forEach(item => {
-      html += `<div class="item done" id="item-${item.id}">
-        <button class="check-btn" onclick="toggleItem(${item.id})">
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-            <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <span class="item-text">${escHtml(item.text)}</span>
-        <button class="del-btn" onclick="deleteItem(${item.id})">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>`;
-    });
+    done.forEach(i => html += itemHtml(i));
   }
-
   area.innerHTML = html;
 }
 
 function renderPlaces(area, items) {
   const pending = items.filter(i => !i.done);
-  const done = items.filter(i => i.done);
+  const done    = items.filter(i => i.done);
 
-  let html = '<div class="timeline">';
-
-  pending.forEach(item => {
-    html += `<div class="tl-item" id="item-${item.id}">
-      <div class="tl-dot" onclick="toggleItem(${item.id})"></div>
+  const tlHtml = (item) => `
+    <div class="tl-item ${item.done ? 'done' : ''}" id="item-${item.id}">
+      <div class="tl-dot" onclick="toggleItem('${item.id}')"></div>
       <div class="tl-card">
         <div class="tl-body">
           <div class="tl-name">${escHtml(item.text)}</div>
           <div class="tl-time">添加于 ${item.addedAt || ''}</div>
         </div>
-        <button class="tl-del" onclick="deleteItem(${item.id})">
+        <button class="tl-del" onclick="deleteItem('${item.id}')">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </button>
       </div>
     </div>`;
-  });
 
+  let html = '<div class="timeline">';
+  pending.forEach(i => html += tlHtml(i));
   html += '</div>';
 
-  if (done.length > 0) {
+  if (done.length) {
     html += `<div class="section-header">已到访 ${done.length}</div><div class="timeline">`;
-    done.forEach(item => {
-      html += `<div class="tl-item done" id="item-${item.id}">
-        <div class="tl-dot" onclick="toggleItem(${item.id})"></div>
-        <div class="tl-card">
-          <div class="tl-body">
-            <div class="tl-name">${escHtml(item.text)}</div>
-            <div class="tl-time">添加于 ${item.addedAt || ''}</div>
-          </div>
-          <button class="tl-del" onclick="deleteItem(${item.id})">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-      </div>`;
-    });
+    done.forEach(i => html += tlHtml(i));
     html += '</div>';
   }
-
   area.innerHTML = html;
 }
 
 // ── Utils ──────────────────────────────────────────────
 function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ── Enter key ──────────────────────────────────────────
 document.getElementById('item-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') { e.preventDefault(); addItem(); }
+  if (e.key === 'Enter') { e.preventDefault(); window.addItem(); }
 });
 
 // ── Init ───────────────────────────────────────────────
